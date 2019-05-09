@@ -1,6 +1,6 @@
 #' wAF Summary
 #'
-#' @param x An object of "wAF" class
+#' @param x An object of "wAF" class.
 #'
 #' @return Method used; P-value; weights used.
 #' @export
@@ -24,7 +24,7 @@ summary.wAF<-function(x, ...){
 
 #' wAF Print
 #'
-#' @param x An object of "wAF" class
+#' @param x An object of "wAF" class.
 #'
 #' @return Method used; P-value; weights used.
 #' @export
