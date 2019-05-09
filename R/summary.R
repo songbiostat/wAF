@@ -1,3 +1,10 @@
+#' wAF Summary
+#'
+#' @param x An object of "wAF" class
+#'
+#' @return Method used; P-value; weights used.
+#' @export
+#'
 summary.wAF<-function(x, ...){
   cat("Method:\n")
   cat(paste(x$method, "\n"))
@@ -14,6 +21,14 @@ summary.wAF<-function(x, ...){
   }
 }
 
+
+#' wAF Print
+#'
+#' @param x An object of "wAF" class
+#'
+#' @return Method used; P-value; weights used.
+#' @export
+#'
 print.wAF<-function(x, ...){
   cat("Method:\n")
   cat(paste(x$method, "\n"))
