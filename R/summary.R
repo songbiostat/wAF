@@ -5,7 +5,7 @@
 #' @return Method used; P-value; weights used.
 #' @export
 #'
-summary.wAF<-function(x, ...){
+summary.wAF <- function(x, ...){
   cat("Method:\n")
   cat(paste(x$method, "\n"))
   cat("\n")
@@ -29,7 +29,7 @@ summary.wAF<-function(x, ...){
 #' @return Method used; P-value; weights used.
 #' @export
 #'
-print.wAF<-function(x, ...){
+print.wAF <- function(x, ...){
   cat("Method:\n")
   cat(paste(x$method, "\n"))
   cat("\n")
