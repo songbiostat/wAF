@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.R
 \name{print.wAF}
 \alias{print.wAF}
-\title{wAF Print}
+\title{Print Function for Objects of "wAF" Class}
 \usage{
 \method{print}{wAF}(x, ...)
 }
@@ -13,5 +13,5 @@
 Method used; P-value; weights used.
 }
 \description{
-wAF Print
+Print Function for Objects of "wAF" Class
 }

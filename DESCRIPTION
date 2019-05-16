@@ -8,7 +8,6 @@ Author: Chi Song <song.1188@osu.edu>,
 Maintainer: Xiaoyu Cai <cai.321@osu.edu>
 Depends: R (>= 2.10.1), utils, stats, boot
 Description: The functions needed to perform (directed) weighted adaptive Fisher test.
-    Use four spaces when indenting paragraphs within the Description.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true

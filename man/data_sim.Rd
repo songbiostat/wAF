@@ -25,10 +25,10 @@ distribution.}
 distribution. Default is a first order autoregressive structure with
 adjacent correlation 0.9.}
 
-\item{maf}{Minor allele frequences for the SNVs.}
+\item{maf}{Minor allele frequencies for the SNVs.}
 
 \item{beta}{SNV effects including the constant. If beta is given, K,
-prop and strg can be missing.}
+prop and strg should be missing; otherwise, beta will be overwritten.}
 }
 \value{
 A list object. SNV is a n by K matrix with counts of minor alleles,

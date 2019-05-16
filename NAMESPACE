@@ -3,7 +3,6 @@
 S3method(print,wAF)
 S3method(summary,wAF)
 export(data_sim)
-export(hello)
 export(perm_score)
 export(wAF)
 export(wAF_combine)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.R
 \name{summary.wAF}
 \alias{summary.wAF}
-\title{wAF Summary}
+\title{Summary Function for Objects of "wAF" Class}
 \usage{
 \method{summary}{wAF}(x, ...)
 }
@@ -13,5 +13,5 @@
 Method used; P-value; weights used.
 }
 \description{
-wAF Summary
+Summary Function for Objects of "wAF" Class
 }

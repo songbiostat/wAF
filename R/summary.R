@@ -1,4 +1,4 @@
-#' wAF Summary
+#' Summary Function for Objects of "wAF" Class
 #'
 #' @param x An object of "wAF" class.
 #'
@@ -22,7 +22,7 @@ summary.wAF <- function(x, ...){
 }
 
 
-#' wAF Print
+#' Print Function for Objects of "wAF" Class
 #'
 #' @param x An object of "wAF" class.
 #'
