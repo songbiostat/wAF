@@ -6,16 +6,16 @@
 \title{Simulated Single Nucleotide Variants (SNVs) Data in Dense Scenario}
 \format{A list with two elements:
 \describe{
-  \item{SNV}{A 1,000 by 100 matrix containing the genotypes. Each component
-  of the matrix denotes the number of minor alleles.}
+  \item{SNV}{A 1,000 by 100 matrix containing the genotypes. Each
+  component of the matrix denotes the number of minor alleles.}
   \item{trait}{A vector of length 1,000 containing a continuous trait.}
 }}
 \usage{
 data(SNV_dense)
 }
 \description{
-A simulated dataset containing 1,000 subjects and 100 sNVs. 20% of
-the variants are simulated to be causal/associated. Effect strengths are
-randomly sampled from U(-0.2, 0.2) distribution.
+A simulated dataset containing 1,000 subjects and 100 sNVs. 20\% of
+the variants are simulated to be causal/associated. Effect strengths
+are randomly sampled from U(-0.2, 0.2) distribution.
 }
 \keyword{datasets}

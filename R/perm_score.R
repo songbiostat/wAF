@@ -1,25 +1,46 @@
 #' Score Statistics Permutation
 #'
-#' @description It generates correlated score statistics by permutation.
+#' @description This function generates correlated score statistics
+#' by permutation.
 #'
 #' @param Y Phenotype data. It can be a continuous trait
-#' or a disease indicator. A vector or length n (number of subjects).
-#' @param X Genotype data. A matrix with dimension n (number of subjects)
-#' by K (number of variants).
-#' @param binary Indicator of whether Y is binary.
-#' @param out Use "2sided" for outputting P-values of two-sided score tests,
-#' "all" for outputting P-values of both one-sided and two score tests.
-#' @param nperm Number of permutations.
+#' or a binary trait. A vector or length n (number of subjects).
 #'
-#' @return A list object. Us: score statistics.
-#' nonzero_var: indicators of variants with nonzero variance.
-#' If out="2sided", pvs: P-values of two-tailed score tests.
-#' If out="all", pvs_2sided: P-values of two_tailed score tests;
-#' pvs_left: left-side P-values of one-tailed score tests.
-#' pvs-right: right-side P-values of one-tailed score tests.
+#' @param X Genotype data. A matrix with dimensions n (number of subjects)
+#' by K (number of variants).
+#'
+#' @param binary Indicator of whether Y is binary.
+#'
+#' @param out Output options. "2sided" only outputs P-values of two-tailed
+#' score tests; "all" outputs P-values of two-tailed test and two
+#' one-tailed score tests.
+#'
+#' @param nperm Number of permutations. Default is 10,000.
+#'
+#' @return A list object.
+#' \describe{
+#'   \item{Us}{Score statistics. The first column contains the original
+#'   data.}
+#'   \item{nonzero_var}{Indicators of variants with nonzero variance.}
+#'   \item{pvs}{P-values of two-tailed score tests (if out = "2sided" is
+#' used).}
+#'   \item{pvs_2sided}{P-values of two_tailed score tests (if out = "all"
+#'   is used).}
+#'   \item{pvs_left}{Left-side P-values of one-tailed score tests
+#' (if out = "all" is used).}
+#'   \item{pvs_sided}{Right-side P-values of one-tailed score tests
+#' (if out = "all" is used).}
+#'}
+#'
 #' @export
 #'
-perm_score <- function(Y, X, binary = FALSE, out = c("2sided", "all"), nperm = 1e4) {
+#' @examples
+#' Y <- SNV_sparse$trait
+#' X <- SNV_sparse$SNV
+#' result <- perm_score(Y, X, out = "all", nperm = 100)
+#' names(result)
+perm_score <- function(Y, X, binary = FALSE,
+                       out = c("2sided", "all"), nperm = 1e4) {
 
   out <- match.arg(out)
 
@@ -43,8 +64,8 @@ perm_score <- function(Y, X, binary = FALSE, out = c("2sided", "all"), nperm = 1
   }else{
     p.right <- 1-pnorm(Up)
     p.left <- pnorm(Up)
-    result <- list(pvs_2sided = p.2side, pvs_right = p.right, pvs_left = p.left,
-                   Us = Up, nonzero_var = index)
+    result <- list(pvs_2sided = p.2side, pvs_right = p.right,
+                   pvs_left = p.left, Us = Up, nonzero_var = index)
   }
   return(result)
 }

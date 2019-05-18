@@ -1,22 +1,43 @@
 #' Data Simulation
 #'
 #' @param n Number of subjects.
+#'
 #' @param K Number of SNVs.
+#'
 #' @param prop Proportion of true causal/associated SNVs.
+#'
 #' @param strg Effect size. SNV effects are selected from U(-strg, strg)
 #' distribution.
+#'
 #' @param binary Idicator of whether the trait is binary.
+#'
 #' @param case Number of cases if binary trait is simulated. Default is n/2.
+#'
 #' @param corr Correlation matrix of the underlying multivariate normal
 #' distribution. Default is a first order autoregressive structure with
 #' adjacent correlation 0.9.
+#'
 #' @param maf Minor allele frequencies for the SNVs.
+#'
 #' @param beta SNV effects including the constant. If beta is given, K,
 #' prop and strg should be missing; otherwise, beta will be overwritten.
 #'
-#' @return A list object. SNV is a n by K matrix with counts of minor alleles,
-#' trait is a n-vector with the simulated traits.
+#' @return A list object.
+#' \describe{
+#'   \item{SNV}{A n by K matrix with counts of minor alleles.}
+#'   \item{trait}{A vector with simulated traits for n subjects.}
+#' }
+#'
 #' @export
+#'
+#' @examples
+#' # Simulate data using n, K, prop, strg
+#' data1 <- data_sim(100, 10, 0.1, 2)
+#'
+#' # Simulate data using given beta
+#' beta0 <- runif(11)
+#' maf <- runif(10, min = 0.001, max = 0.3)
+#' data2 <- data_sim(100, case = 60, maf = maf, beta = beta0)
 #'
 data_sim <- function(n, K, prop, strg, binary = FALSE, case = NULL,
                      corr = NULL, maf = NULL, beta = NULL){

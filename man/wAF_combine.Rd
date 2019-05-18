@@ -7,20 +7,45 @@
 wAF_combine(p, log = FALSE, weight = NULL, n0 = 1)
 }
 \arguments{
-\item{p}{P-values to combine. A matrix with dimenstion K (number of variants)
-by N (number of permutations plus one).}
+\item{p}{P-values to be combined. A matrix with dimenstions K by N.
+If an object of P-values from perm_score is used, K is the number
+of SNVs, and N is the number of permutations plus 1.}
 
 \item{log}{Indicator of whether P-values are on the log scale.}
 
-\item{weight}{Weights given to the P-values. A vector with dimention
-K (number of variants).Flat weight is used if it is not specified.}
+\item{weight}{Weights given to the P-values. A vector with dimension
+K. Flat weight is used if it is not specified.}
 
-\item{n0}{Tuning parameter. Discard the first n0-1 P-values of each column.}
+\item{n0}{Tuning parameter. Discard the first n0-1 P-values of each
+column.}
 }
 \value{
-A list object. pv: P-value of wAF test; stat: observed test statitic of wAF
-test; stat_dist: wAF test statistics for P-values in every column.
+A list object.
+\describe{
+  \item{pv}{P-value of wAF test.}
+  \item{stat}{Observed test statitic of wAF test.}
+  \item{stat_dist}{wAF test statistics for P-values in every column.}
+  \item{SNV_combined}{Variants which are combined into the test
+  statistic. The index of included variants are returned in the ascending
+  order of their weighted P-values.}
+}
 }
 \description{
-It combines P-values using weighted adaptive Fisher (wAF) method.
+This function combines P-values using
+weighted adaptive Fisher (wAF) method.
+}
+\examples{
+# Combine P-values of normally distributed test statistics
+U <- matrix(rnorm(10 * 100), ncol=100)
+p <- 2 * (1 - pnorm(abs(U)))
+wt <- (1:10)/55
+test <- wAF_combine(p, weight = wt)
+
+
+# Combine P-values from perm_score
+Y <- SNV_sparse$trait
+X <- SNV_sparse$SNV
+result <- perm_score(Y, X, out = "all", nperm = 100)
+test <- wAF_combine(result$pvs_2sided)
+
 }

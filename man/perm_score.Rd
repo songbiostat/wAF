@@ -9,26 +9,42 @@ perm_score(Y, X, binary = FALSE, out = c("2sided", "all"),
 }
 \arguments{
 \item{Y}{Phenotype data. It can be a continuous trait
-or a disease indicator. A vector or length n (number of subjects).}
+or a binary trait. A vector or length n (number of subjects).}
 
-\item{X}{Genotype data. A matrix with dimension n (number of subjects)
+\item{X}{Genotype data. A matrix with dimensions n (number of subjects)
 by K (number of variants).}
 
 \item{binary}{Indicator of whether Y is binary.}
 
-\item{out}{Use "2sided" for outputting P-values of two-sided score tests,
-"all" for outputting P-values of both one-sided and two score tests.}
+\item{out}{Output options. "2sided" only outputs P-values of two-tailed
+score tests; "all" outputs P-values of two-tailed test and two
+one-tailed score tests.}
 
-\item{nperm}{Number of permutations.}
+\item{nperm}{Number of permutations. Default is 10,000.}
 }
 \value{
-A list object. Us: score statistics.
-nonzero_var: indicators of variants with nonzero variance.
-If out="2sided", pvs: P-values of two-tailed score tests.
-If out="all", pvs_2sided: P-values of two_tailed score tests;
-pvs_left: left-side P-values of one-tailed score tests.
-pvs-right: right-side P-values of one-tailed score tests.
+A list object.
+\describe{
+  \item{Us}{Score statistics. The first column contains the original
+  data.}
+  \item{nonzero_var}{Indicators of variants with nonzero variance.}
+  \item{pvs}{P-values of two-tailed score tests (if out = "2sided" is
+used).}
+  \item{pvs_2sided}{P-values of two_tailed score tests (if out = "all"
+  is used).}
+  \item{pvs_left}{Left-side P-values of one-tailed score tests
+(if out = "all" is used).}
+  \item{pvs_sided}{Right-side P-values of one-tailed score tests
+(if out = "all" is used).}
+}
 }
 \description{
-It generates correlated score statistics by permutation.
+This function generates correlated score statistics
+by permutation.
+}
+\examples{
+Y <- SNV_sparse$trait
+X <- SNV_sparse$SNV
+result <- perm_score(Y, X, out = "all", nperm = 100)
+names(result)
 }

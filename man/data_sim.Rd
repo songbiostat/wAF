@@ -31,9 +31,22 @@ adjacent correlation 0.9.}
 prop and strg should be missing; otherwise, beta will be overwritten.}
 }
 \value{
-A list object. SNV is a n by K matrix with counts of minor alleles,
-trait is a n-vector with the simulated traits.
+A list object.
+\describe{
+  \item{SNV}{A n by K matrix with counts of minor alleles.}
+  \item{trait}{A vector with simulated traits for n subjects.}
+}
 }
 \description{
 Data Simulation
+}
+\examples{
+# Simulate data using n, K, prop, strg
+data1 <- data_sim(100, 10, 0.1, 2)
+
+# Simulate data using given beta
+beta0 <- runif(11)
+maf <- runif(10, min = 0.001, max = 0.3)
+data2 <- data_sim(100, case = 60, maf = maf, beta = beta0)
+
 }

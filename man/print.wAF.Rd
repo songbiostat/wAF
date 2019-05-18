@@ -10,8 +10,17 @@
 \item{x}{An object of "wAF" class.}
 }
 \value{
-Method used; P-value; weights used.
+Method used; P-value; weights used; variants combined into the test
+statistic.
 }
 \description{
 Print Function for Objects of "wAF" Class
+}
+\examples{
+Y <- SNV_sparse$trait
+X <- SNV_sparse$SNV
+test2 <- wAF(Y, X, method = "wAFd", weight = "flat", nperm = 100)
+test2
+print(test2)
+
 }

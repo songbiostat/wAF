@@ -6,8 +6,8 @@
 \title{Simulated Rare Variants Data in Sparse Scenario}
 \format{A list with two elements:
 \describe{
-  \item{SNV}{A 1,000 by 300 matrix containing the genotypes. Each component
-  of the matrix denotes the number of minor alleles.}
+  \item{SNV}{A 1,000 by 300 matrix containing the genotypes. Each
+  component of the matrix denotes the number of minor alleles.}
   \item{trait}{A vector of length 1,000 containing disease labels
   (500 cases and 500 controls).}
 }}
@@ -15,8 +15,8 @@
 data(RV_sparse)
 }
 \description{
-A simulated dataset containing 1,000 subjects and 300 rare variants. 1% of
-the variants are simulated to be causal/associated. Effect strengths are
-randomly sampled from U(-2, 2) distribution.
+A simulated dataset containing 1,000 subjects and 300 rare variants.
+1\% of the variants are simulated to be causal/associated. Effect
+strengths are randomly sampled from U(-2, 2) distribution.
 }
 \keyword{datasets}

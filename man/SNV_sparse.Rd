@@ -6,16 +6,16 @@
 \title{Simulated Single Nucleotide Variants (SNVs) Data in Sparse Scenario}
 \format{A list with two elements:
 \describe{
-  \item{SNV}{A 1,000 by 300 matrix containing the genotypes. Each component
-  of the matrix denotes the number of minor alleles.}
+  \item{SNV}{A 1,000 by 300 matrix containing the genotypes. Each
+  component of the matrix denotes the number of minor alleles.}
   \item{trait}{A vector of length 1,000 containing a continuous trait.}
 }}
 \usage{
 data(SNV_sparse)
 }
 \description{
-A simulated dataset containing 1,000 subjects and 100 SNVs. 1% of
-the variants are simulated to be causal/associated. Effect strengths are
-randomly sampled from U(-0.5, 0.5) distribution.
+A simulated dataset containing 1,000 subjects and 100 SNVs. 1\% of
+the variants are simulated to be causal/associated. Effect strengths
+are randomly sampled from U(-0.5, 0.5) distribution.
 }
 \keyword{datasets}

@@ -1,25 +1,54 @@
-#' Weighted Adaptive Fisher Test for A Single Trait-SNV Set Association
+#' Weighted Adaptive Fisher Test for Trait-SNV Set Association
 #'
-#' @description It performs weighted adaptive Fisher for a single trait and
-#' a set of SNV data.
+#' @description This function performs weighted Adaptive Fisher (wAF) test for
+#' detecting association between a single trait and a set of single nucleotide
+#' variatnts (SNVs).
 #'
 #' @param Y Phenotype data. It can be a continuous trait
-#' or a disease indicator. A vector or length n (number of subjects).
-#' @param X X Genotype data. A matrix with dimension n (number of subjects)
+#' or a binary trait. A vector or length n (number of subjects).
+#'
+#' @param X Genotype data. A matrix with dimensions n (number of subjects)
 #' by K (number of variants).
+#'
 #' @param binary Indicator of whether Y is binary.
-#' @param method Use "wAF" for weighted adaptive Fisher test, "wAFd" for directed
-#' adaptive Fisher test.
-#' @param weight Use "sd" for standard deviation weights, "flat" for flat weights.
+#'
+#' @param method Method option. Use "wAF" for wAF test,
+#' "wAFd" for directed wAF test.
+#'
+#' @param weight Weight option. Use "sd" for standard deviation weights,
+#' "flat" for flat weights.
+#'
 #' @param weight_vector User-specified weights. A vector of length K (number of
 #' variants).
-#' @param n0 Tuning parameter. Discard the first n0-1 P-values of each column.
-#' @param nperm Number of permutations.
 #'
-#' @return A list object. pv: P-value of wAF(wAFd) test;
-#' stat: observed test statitic of wAF(wAFd) test;
-#' stat_dist: wAF(wAFd) test statistics for P-values in every column.
+#' @param n0 Tuning parameter. Discard the first n0-1 P-values of each column.
+#'
+#'  @param nperm Number of permutations. Default is 10,000.
+#'
+#' @return An object of "wAF" class.
+#' \describe{
+#'  \item{pv}{P-value of wAF(wAFd) test.}
+#'  \item{stat}{Test statistic of wAF(wAFd) test.}
+#'  \item{SNV_combined}{Variants which are combined into the test
+#'   statistic. The index of included variants are returned in the ascending
+#'   order of their weighted P-values.}
+#'   \item{method}{Method used.}
+#'   \item{weight_method}{Method of weighing variants, "sd" of "flat".}
+#'   \item{weight_vector}{Vector of Weights used (if "sd" or self-defined
+#'   weights are used).}
+#'
+#' }
+#'
 #' @export
+#'
+#' @examples
+#' Y <- SNV_sparse$trait
+#' X <- SNV_sparse$SNV
+#' test1 <- wAF(Y, X, method = "wAF", nperm = 100)
+#' test2 <- wAF(Y, X, method = "wAFd", weight = "flat", nperm = 100)
+#'
+#' summary(test1)
+#' test2
 #'
 wAF <- function(Y, X, binary = FALSE, method = c("wAF", "wAFd"),
                 weight = c("sd", "flat"), weight_vector = NULL,
@@ -37,6 +66,7 @@ wAF <- function(Y, X, binary = FALSE, method = c("wAF", "wAFd"),
     }
   } else {
     weight_vector <- weight_vector[score$nonzero_var]
+    weight <- "self defined"
   }
 
   if (method == "wAF") {
@@ -46,6 +76,16 @@ wAF <- function(Y, X, binary = FALSE, method = c("wAF", "wAFd"),
                          weight = weight_vector, n0 = n0)
   }
 
-  result <- list(pv = test$pv, stat = test$stat, stat_dist = test$stat_dist)
+  combine.index <- ((1:ncol(X))[score$nonzero_var])[test$SNV_combined]
+
+  result <- list(pv = test$pv, stat = test$stat, SNV_combined = combine.index,
+                 method = method, weight_method = weight)
+
+  if (weight %in% c("sd", "self defined")) {
+    result[["weight_vector"]] <- weight_vector
+  }
+
+  class(result)<-"wAF"
+
   return(result)
 }
