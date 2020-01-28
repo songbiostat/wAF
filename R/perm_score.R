@@ -15,7 +15,7 @@
 #' score tests; "all" outputs P-values of two-tailed test and two
 #' one-tailed score tests.
 #'
-#' @param nperm Number of permutations. Default is 10,000.
+#' @param nperm Number of permutations. Default is 1,000.
 #'
 #' @return A list object.
 #' \describe{
@@ -40,7 +40,7 @@
 #' result <- perm_score(Y, X, out = "all", nperm = 100)
 #' names(result)
 perm_score <- function(Y, X, binary = FALSE,
-                       out = c("2sided", "all"), nperm = 1e4) {
+                       out = c("2sided", "all"), nperm = 1e3) {
 
   out <- match.arg(out)
 
