@@ -9,8 +9,8 @@
 #'
 #' @examples
 #' Y <- SNV_sparse$trait
-#' X <- SNV_sparse$SNV
-#' test1 <- wAF(Y, X, method = "wAF", nperm = 100)
+#' X <- SNV_sparse$SNV[, -SNV_sparse$zero_var]
+#' test1 <- wAF(Y, X, nperm = 100)
 #' summary(test1)
 #'
 summary.wAF <- function(x, ...){
@@ -21,15 +21,15 @@ summary.wAF <- function(x, ...){
   print(x$pv)
   cat("\n")
   cat("Weights:\n")
-  if (x$weight_method == "flat") {
+  if (x$weight == "flat") {
     cat("Flat Weights\n")
   } else {
-    cat(paste(x$weight_method, "weights: \n"))
-    print(x$weight_vector)
+    cat(paste(x$weight, "weights: \n"))
+    print(x$weight_values)
   }
   cat("\n")
   cat("SNVs combined into test statistic:\n")
-  print(x$SNV_combined)
+  print(x$loci_combined)
 }
 
 
@@ -44,8 +44,8 @@ summary.wAF <- function(x, ...){
 #'
 #' @examples
 #' Y <- SNV_sparse$trait
-#' X <- SNV_sparse$SNV
-#' test2 <- wAF(Y, X, method = "wAFd", weight = "flat", nperm = 100)
+#' X <- SNV_sparse$SNV[, -SNV_sparse$zero_var]
+#' test2 <- wAF(Y, X, w = "flat", nperm = 100)
 #' test2
 #' print(test2)
 #'
@@ -57,13 +57,13 @@ print.wAF <- function(x, ...){
   print(x$pv)
   cat("\n")
   cat("Weights:\n")
-  if (x$weight_method == "flat") {
+  if (x$weight == "flat") {
     cat("Flat Weights\n")
   } else {
-    cat(paste(x$weight_method, "weights: \n"))
-    print(x$weight_vector)
+    cat(paste(x$weight, "weights: \n"))
+    print(x$weight_values)
   }
   cat("\n")
   cat("SNVs combined into test statistic:\n")
-  print(x$SNV_combined)
+  print(x$loci_combined)
 }

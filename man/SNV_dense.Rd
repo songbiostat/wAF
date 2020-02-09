@@ -4,17 +4,20 @@
 \name{SNV_dense}
 \alias{SNV_dense}
 \title{Simulated Single Nucleotide Variants (SNVs) Data in Dense Scenario}
-\format{A list with two elements:
+\format{A list object.
 \describe{
   \item{SNV}{A 1,000 by 100 matrix containing the genotypes. Each
   component of the matrix denotes the number of minor alleles.}
   \item{trait}{A vector of length 1,000 containing a continuous trait.}
+  \item{zero_var}{Indexes for columns with no variation. These
+  columns should be removed if SNV is further used by perm_score, wAF and
+  wAFd functions.}
 }}
 \usage{
 data(SNV_dense)
 }
 \description{
-A simulated dataset containing 1,000 subjects and 100 sNVs. 20\% of
+A simulated dataset containing 1,000 subjects and 100 SNVs. 20\% of
 the variants are simulated to be causal/associated. Effect strengths
 are randomly sampled from U(-0.2, 0.2) distribution.
 }

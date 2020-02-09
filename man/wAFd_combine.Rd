@@ -4,16 +4,13 @@
 \alias{wAFd_combine}
 \title{Directed wAF Combination}
 \usage{
-wAFd_combine(pvs_2sided, pvs_right, pvs_left, log = FALSE,
-  weight = NULL, n0 = 1)
+wAFd_combine(pvs_2sided, pvs_left, log = FALSE, weight = NULL,
+  n0 = 1)
 }
 \arguments{
 \item{pvs_2sided}{P-values of two-tailed tests. A matrix with
 dimenstions K by N. If an object of P-values from perm_score is used,
 K is the number of SNVs, and N is the number of permutations plus 1.}
-
-\item{pvs_right}{Right-side P-values of one-tailed tests. Dimensions
-should be the same as pvs_2sided.}
 
 \item{pvs_left}{Left-side P-values of one-tailed tests. Dimensions
 should be the same as pvs_2sided.}
@@ -31,10 +28,10 @@ A list object.
 \describe{
   \item{pv}{P-value of wAF dtest.}
   \item{stat}{Observed test statitic of wAFd test.}
-  \item{stat_dist}{wAFd test statistics for P-values in every column.}
-  \item{SNV_combined}{Variants which are combined into the test
+  \item{loci_combined}{Variants which are combined into the test
   statistic. The index of included variants are returned in the ascending
   order of their weighted P-values.}
+  \item{stat_all}{wAFd test statistics for P-values in every column.}
 }
 }
 \description{
@@ -46,17 +43,13 @@ method.
 # Combine P-values of normally distributed test statistics
 U <- matrix(rnorm(10 * 100), ncol=100)
 p <- 2 * (1 - pnorm(abs(U)))
-p.r <- 1 - pnorm(abs(U))
 p.l <- pnorm(abs(U))
 wt <- (1:10)/55
-test <- wAFd_combine(p, p.r, p.l, weight = wt)
+test <- wAFd_combine(p, p.l, weight = wt)
 
-
-# Combine P-values from perm_score
 Y <- SNV_sparse$trait
-X <- SNV_sparse$SNV
-result <- perm_score(Y, X, out = "all", nperm = 100)
-test <- wAFd_combine(result$pvs_2sided, result$pvs_right,
-result$pvs_left)
+X <- SNV_sparse$SNV[, - SNV_sparse$zero_var]
+result <- perm_score(Y, X, nperm = 100)
+test <- wAFd_combine(result$pvs, result$pvs_left)
 
 }

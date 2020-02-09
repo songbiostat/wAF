@@ -4,38 +4,35 @@
 \alias{perm_score}
 \title{Score Statistics Permutation}
 \usage{
-perm_score(Y, X, binary = FALSE, out = c("2sided", "all"),
-  nperm = 10000)
+perm_score(Y, X, binary = FALSE, cov = NULL, nperm = 1000,
+  seed = NULL)
 }
 \arguments{
 \item{Y}{Phenotype data. It can be a continuous trait
 or a binary trait. A vector or length n (number of subjects).}
 
 \item{X}{Genotype data. A matrix with dimensions n (number of subjects)
-by K (number of variants).}
+by K (number of variants). If elements within a column of X are identical,
+this column needs to be removed ahead.}
 
 \item{binary}{Indicator of whether Y is binary.}
 
-\item{out}{Output options. "2sided" only outputs P-values of two-tailed
-score tests; "all" outputs P-values of two-tailed test and two
-one-tailed score tests.}
+\item{cov}{Covariates. A matrix with dimensions n (number of subjects)
+by J (number of covariates).}
 
-\item{nperm}{Number of permutations. Default is 10,000.}
+\item{nperm}{Number of permutations. Default is 1,000.}
+
+\item{seed}{Specify seed for permutations.}
 }
 \value{
 A list object.
 \describe{
   \item{Us}{Score statistics. The first column contains the original
   data.}
-  \item{nonzero_var}{Indicators of variants with nonzero variance.}
-  \item{pvs}{P-values of two-tailed score tests (if out = "2sided" is
-used).}
-  \item{pvs_2sided}{P-values of two_tailed score tests (if out = "all"
-  is used).}
-  \item{pvs_left}{Left-side P-values of one-tailed score tests
-(if out = "all" is used).}
-  \item{pvs_sided}{Right-side P-values of one-tailed score tests
-(if out = "all" is used).}
+  \item{pvs}{P-values of two-tailed score tests;
+  can be further used by wAF_combine function.}
+  \item{pvs_left}{Left-side P-values of one-tailed score tests;
+  can be further used by wAF_combine, wAFd_combine functions.}
 }
 }
 \description{
@@ -43,8 +40,18 @@ This function generates correlated score statistics
 by permutation.
 }
 \examples{
-Y <- SNV_sparse$trait
-X <- SNV_sparse$SNV
-result <- perm_score(Y, X, out = "all", nperm = 100)
+# binary trait
+Y <- RV_dense$trait
+X <- RV_dense$SNV[, -RV_dense$zero_var]
+result <- perm_score(Y, X, binary = TRUE, nperm = 100)
 names(result)
+
+# continuous trait
+Y <- SNV_sparse$trait
+X <- SNV_sparse$SNV[, -SNV_sparse$zero_var]
+result <- perm_score(Y, X, nperm = 100)
+names(result)
+}
+\seealso{
+{\code{\link{set.seed}}}
 }

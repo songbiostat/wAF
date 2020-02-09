@@ -4,12 +4,15 @@
 \name{RV_dense}
 \alias{RV_dense}
 \title{Simulated Rare Variants Data in Dense Scenario}
-\format{A list with two elements:
+\format{A list object.
 \describe{
   \item{SNV}{A 1,000 by 300 matrix containing the genotypes. Each
   component of the matrix denotes the number of minor alleles.}
   \item{trait}{A vector of length 1,000 containing disease labels
   (500 cases and 500 controls).}
+  \item{zero_var}{Indexes for columns with no variation. These
+  columns should be removed if SNV is further used by perm_score, wAF and
+  wAFd functions.}
 }}
 \usage{
 data(RV_dense)

@@ -23,11 +23,11 @@ column.}
 A list object.
 \describe{
   \item{pv}{P-value of wAF test.}
-  \item{stat}{Observed test statitic of wAF test.}
-  \item{stat_dist}{wAF test statistics for P-values in every column.}
-  \item{SNV_combined}{Variants which are combined into the test
+  \item{stat}{wAF test (for observed data, i.e. first column of matrix p).}
+  \item{loci_combined}{Variants which are combined into the test
   statistic. The index of included variants are returned in the ascending
   order of their weighted P-values.}
+  \item{stat_all}{wAF statistics for P-values in every column.}
 }
 }
 \description{
@@ -41,11 +41,10 @@ p <- 2 * (1 - pnorm(abs(U)))
 wt <- (1:10)/55
 test <- wAF_combine(p, weight = wt)
 
-
 # Combine P-values from perm_score
 Y <- SNV_sparse$trait
-X <- SNV_sparse$SNV
-result <- perm_score(Y, X, out = "all", nperm = 100)
-test <- wAF_combine(result$pvs_2sided)
+X <- SNV_sparse$SNV[, -SNV_sparse$zero_var]
+result <- perm_score(Y, X, nperm = 100)
+test <- wAF_combine(result$pvs)
 
 }

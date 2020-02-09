@@ -35,6 +35,9 @@ A list object.
 \describe{
   \item{SNV}{A n by K matrix with counts of minor alleles.}
   \item{trait}{A vector with simulated traits for n subjects.}
+  \item{zero_var}{Indexes for columns with no variation. These
+  columns should be removed if SNV is further used by perm_score, wAF and
+  wAFd functions.}
 }
 }
 \description{

@@ -18,8 +18,8 @@ Summary Function for Objects of "wAF" Class
 }
 \examples{
 Y <- SNV_sparse$trait
-X <- SNV_sparse$SNV
-test1 <- wAF(Y, X, method = "wAF", nperm = 100)
+X <- SNV_sparse$SNV[, -SNV_sparse$zero_var]
+test1 <- wAF(Y, X, nperm = 100)
 summary(test1)
 
 }

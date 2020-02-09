@@ -26,6 +26,9 @@
 #' \describe{
 #'   \item{SNV}{A n by K matrix with counts of minor alleles.}
 #'   \item{trait}{A vector with simulated traits for n subjects.}
+#'   \item{zero_var}{Indexes for columns with no variation. These
+#'   columns should be removed if SNV is further used by perm_score, wAF and
+#'   wAFd functions.}
 #' }
 #'
 #' @export
@@ -105,7 +108,9 @@ data_sim <- function(n, K, prop, strg, binary = FALSE, case = NULL,
     }
   }
   X<-t(X)
+  s <- apply(X, 2, sd)
+  ind <- which(s == 0)
 
-  result <- list(SNV = X, trait = Y)
+  result <- list(SNV = X, trait = Y, zero_var = ind)
   return (result)
 }

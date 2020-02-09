@@ -4,11 +4,12 @@
 \alias{wAF}
 \title{Weighted Adaptive Fisher Test for Trait-SNV Set Association}
 \usage{
-wAF(Y, X, binary = FALSE, method = c("wAF", "wAFd"), weight = c("sd",
-  "flat"), weight_vector = NULL, n0 = 1, nperm = 10000)
+wAF(Y, X, binary = FALSE, cov = NULL, w = c("sd", "flat"),
+  weight = NULL, adapt_perm = FALSE, cutoff = 2.5e-06,
+  nperm = 1000, n0 = 1, seed = NULL)
 }
 \arguments{
-\item{Y}{Phenotype data. It can be a continuous trait
+\item{Y}{Y Phenotype data. It can be a continuous trait
 or a binary trait. A vector or length n (number of subjects).}
 
 \item{X}{Genotype data. A matrix with dimensions n (number of subjects)
@@ -16,32 +17,41 @@ by K (number of variants).}
 
 \item{binary}{Indicator of whether Y is binary.}
 
-\item{method}{Method option. Use "wAF" for wAF test,
-"wAFd" for directed wAF test.}
+\item{cov}{Covariates. A matrix with dimensions n (number of subjects)
+by J (number of covariates).}
 
-\item{weight}{Weight option. Use "sd" for standard deviation weights,
+\item{w}{Weight option. Use "sd" for standard deviation weights,
 "flat" for flat weights.}
 
-\item{weight_vector}{User-specified weights. A vector of length K (number of
+\item{weight}{User-specified weights. A vector of length K (number of
 variants).}
 
-\item{n0}{Tuning parameter. Discard the first n0-1 P-values of each column.
+\item{adapt_perm}{Whether "step-up" algorithm is used for P-value
+calculation. If FALSE, function permutes nperm times and stops.
+If TRUE, nperm will be increased 10 times each round if P-value
+<= 5/nperm. Algorithm stops if P-value > 5/nperm or <= cutoff.}
 
- @param nperm Number of permutations. Default is 10,000.}
+\item{cutoff}{Cutoff for "step-up" algorithm.}
+
+\item{nperm}{Number of permutations. Also the starting number of
+permutations for "step-up" algorithm. Default is 1,000.}
+
+\item{n0}{Tuning parameter. Discard the first n0-1 P-values of each column.}
+
+\item{seed}{Specify seed for permutations.}
 }
 \value{
 An object of "wAF" class.
 \describe{
- \item{pv}{P-value of wAF(wAFd) test.}
- \item{stat}{Test statistic of wAF(wAFd) test.}
- \item{SNV_combined}{Variants which are combined into the test
+ \item{pv}{P-value of wAF test.}
+ \item{stat}{Test statistic of wAF test.}
+ \item{loci_combined}{Variants which are combined into the test
   statistic. The index of included variants are returned in the ascending
   order of their weighted P-values.}
   \item{method}{Method used.}
-  \item{weight_method}{Method of weighing variants, "sd" of "flat".}
-  \item{weight_vector}{Vector of Weights used (if "sd" or self-defined
+  \item{weight}{Method of weighing variants, "sd" of "flat".}
+  \item{weight_values}{Vector of weights used (if "sd" or user-specified
   weights are used).}
-
 }
 }
 \description{
@@ -50,12 +60,19 @@ detecting association between a single trait and a set of single nucleotide
 variatnts (SNVs).
 }
 \examples{
+## Continuous trait
 Y <- SNV_sparse$trait
-X <- SNV_sparse$SNV
-test1 <- wAF(Y, X, method = "wAF", nperm = 100)
-test2 <- wAF(Y, X, method = "wAFd", weight = "flat", nperm = 100)
+X <- SNV_sparse$SNV[, -SNV_sparse$zero_var]
 
+# sd weights
+test1 <- wAF(Y, X, nperm = 100)
 summary(test1)
+
+# flat weights
+test2 <- wAF(Y, X, w = "flat", nperm = 100)
 test2
 
+}
+\seealso{
+\code{\link{set.seed}}
 }
