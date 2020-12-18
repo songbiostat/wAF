@@ -52,9 +52,11 @@ perm_score <- function(Y, X, binary = FALSE, cov = NULL,
   s <- apply(X, 2, sd)
   if (any (s == 0)) {
     ind <- which(s == 0)
+    print("column indexes of X with no variation")
     print(ind)
-    stop("the above columns of X have no variation and must be removed")
   }
+
+  X <- X[, -ind]
 
   if(is.null(cov)) cov <- rep(1, length(Y))
 
