@@ -54,9 +54,8 @@ perm_score <- function(Y, X, binary = FALSE, cov = NULL,
     ind <- which(s == 0)
     print("column indexes of X with no variation")
     print(ind)
+    X <- X[, -ind]
   }
-
-  X <- X[, -ind]
 
   if(is.null(cov)) cov <- rep(1, length(Y))
 
