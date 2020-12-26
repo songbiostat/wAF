@@ -81,7 +81,11 @@ perm_score <- function(Y, X, binary = FALSE, cov = NULL,
                   function(x) glm.scoretest(null.model, Xres[x, ]))
 
   ## Calculate p-values
-  Up <- cbind(U, U.perm)
+  if (K == 1) {
+    Up <- matrix(c(U, U.perm), ncol = K)
+  } else {
+    Up <- cbind(U, U.perm)
+  }
   p <- 2 * (1 - pnorm(abs(Up)))
   p1 <- pnorm(Up)
 
