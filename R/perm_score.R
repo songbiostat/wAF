@@ -82,7 +82,7 @@ perm_score <- function(Y, X, binary = FALSE, cov = NULL,
 
   ## Calculate p-values
   if (K == 1) {
-    Up <- matrix(c(U, U.perm), ncol = K)
+    Up <- matrix(c(U, U.perm), nrow = K)
   } else {
     Up <- cbind(U, U.perm)
   }
