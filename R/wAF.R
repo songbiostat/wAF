@@ -32,6 +32,8 @@
 #'  \item{loci_combined}{Variants which are combined into the test
 #'   statistic. The index of included variants are returned in the ascending
 #'   order of their weighted P-values.}
+#'   \item{stat_all}{wAF statistics for all permuted samples.}
+#'   \item{pv_all}{P-values of wAF statistics for all permuted samples.
 #'   \item{method}{Method used.}
 #'   \item{weight}{Method of weighing variants, "sd" of "flat".}
 #'   \item{weight_values}{Vector of weights used (if "sd" or user-specified
@@ -89,6 +91,7 @@ wAF <- function(Y, X, binary = FALSE, cov = NULL,
 
   result <- list(pv = test$pv, stat = test$stat,
                  loci_combined = test$loci_combined,
+                 pv_all = test$pv_all, stat_all = test$stat_all,
                  method = "wAF", weight = w)
 
   if (w %in% c("sd", "user-specified")) {
