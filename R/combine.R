@@ -22,7 +22,8 @@
 #'   \item{loci_combined}{Variants which are combined into the test
 #'   statistic. The index of included variants are returned in the ascending
 #'   order of their weighted P-values.}
-#'   \item{stat_all}{wAF statistics for P-values in every column.}
+#'   \item{stat_all}{wAF statistics for all permuted samples.}
+#'   \item{pv_all}{P-values of wAF statistics for all permuted samples.}
 #' }
 #'
 #'
@@ -57,14 +58,15 @@ wAF_combine <- function(p, log = FALSE, weight = NULL, n0 = 1) {
   s <- apply(apply(r, 2, sort), 2, cumsum)
   p.perm <- t(apply(s, 1, rank, ties.method="max")/T)
   stat <- apply(p.perm[n0:N,], 2, min)
-  p.wAF <- mean(stat <= stat[1])
+  p.wAF <- rank(stat, ties.method = "max")/T
 
   # SNVs combined in wAF statistic
   obs.order <- order(r[,1])
   combine.index <- obs.order[1:which.min(p.perm[n0:N, 1])]
 
-  result <- list(pv = p.wAF, stat = stat[1],
-                 loci_combined = combine.index, stat_all = stat)
+  result <- list(pv = p.wAF[1], stat = stat[1],
+                 loci_combined = combine.index,
+                 stat_all = stat, pv_all = p.wAF)
 
   return(result)
 }
@@ -98,7 +100,8 @@ wAF_combine <- function(p, log = FALSE, weight = NULL, n0 = 1) {
 #'   \item{loci_combined}{Variants which are combined into the test
 #'   statistic. The index of included variants are returned in the ascending
 #'   order of their weighted P-values.}
-#'   \item{stat_all}{wAFd test statistics for P-values in every column.}
+#'   \item{stat_all}{wAFd statistics for all permuted samples.}
+#'   \item{pv_all}{P-values of wAFd statistics for all permuted samples.}
 #' }
 #'
 #' @export
@@ -119,6 +122,8 @@ wAF_combine <- function(p, log = FALSE, weight = NULL, n0 = 1) {
 #'
 wAFd_combine <- function(pvs_2sided, pvs_left,
                          log = FALSE, weight = NULL, n0 = 1){
+  T <- ncol(pvs_2sided)
+
   if (log) {
     pvs_right <- log(1-exp(pvs_left))
   } else {
@@ -138,15 +143,16 @@ wAFd_combine <- function(pvs_2sided, pvs_left,
 
   stat.all <- rbind(stat.2side, stat.right, stat.left)
   min.all <- apply(stat.all, 2, min)
-  p.wAFd <- mean(min.all <= min.all[1])
+  p.wAFd <- rank(min.all, ties.method = "max")/T
 
   # SNVs combined in wAF statistic
   combine.list <- list(wAF.2$loci_combined, wAF.r$loci_combined,
                        wAF.l$loci_combined)
   combine.index <- combine.list[[which.min(stat.all[,1])]]
 
-  result <- list(pv = p.wAFd, stat = min.all[1],
-                 loci_combined = combine.index, stat_all = min.all)
+  result <- list(pv = p.wAFd[1], stat = min.all[1],
+                 loci_combined = combine.index,
+                 stat_all = min.all, pv_all = p.wAFd)
 
   return(result)
 }
