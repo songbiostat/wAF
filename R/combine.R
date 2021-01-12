@@ -55,14 +55,20 @@ wAF_combine <- function(p, log = FALSE, weight = NULL, n0 = 1) {
     r <- weight * p
   }
 
-  s <- apply(apply(r, 2, sort), 2, cumsum)
-  p.perm <- t(apply(s, 1, rank, ties.method="max")/T)
-  stat <- apply(p.perm[n0:N,], 2, min)
-  p.wAF <- rank(stat, ties.method = "max")/T
+  if (N == 1) {
+    stat <- as.vector(p)
+    combine.index <- 1
+    p.wAF <- rank(stat, ties.method = "max")/T
+  } else {
+    s <- apply(apply(r, 2, sort), 2, cumsum)
+    p.perm <- t(apply(s, 1, rank, ties.method="max")/T)
+    stat <- apply(p.perm[n0:N,], 2, min)
+    p.wAF <- rank(stat, ties.method = "max")/T
 
-  # SNVs combined in wAF statistic
-  obs.order <- order(r[,1])
-  combine.index <- obs.order[1:which.min(p.perm[n0:N, 1])]
+    # SNVs combined in wAF statistic
+    obs.order <- order(r[,1])
+    combine.index <- obs.order[1:which.min(p.perm[n0:N, 1])]
+  }
 
   result <- list(pv = p.wAF[1], stat = stat[1],
                  loci_combined = combine.index,
