@@ -4,9 +4,19 @@
 \alias{wAFd}
 \title{Directed Weighted Adaptive Fisher Test for Trait-SNV Set Association}
 \usage{
-wAFd(Y, X, binary = FALSE, cov = NULL, w = c("sd", "flat"),
-  weight = NULL, adapt_perm = FALSE, cutoff = 2.5e-06,
-  nperm = 1000, n0 = 1, seed = NULL)
+wAFd(
+  Y,
+  X,
+  binary = FALSE,
+  cov = NULL,
+  w = c("sd", "flat"),
+  weight = NULL,
+  adapt_perm = FALSE,
+  cutoff = 2.5e-06,
+  nperm = 1000,
+  n0 = 1,
+  seed = NULL
+)
 }
 \arguments{
 \item{Y}{Y Phenotype data. It can be a continuous trait
@@ -41,18 +51,7 @@ permutations for "step-up" algorithm. Default is 1,000.}
 \item{seed}{Specify seed for permutations.}
 }
 \value{
-An object of "wAF" class.
-\describe{
- \item{pv}{P-value of wAF test.}
- \item{stat}{Test statistic of wAF test.}
- \item{loci_combined}{Variants which are combined into the test
-  statistic. The index of included variants are returned in the ascending
-  order of their weighted P-values.}
-  \item{method}{Method used.}
-  \item{weight}{Method of weighing variants, "sd" of "flat".}
-  \item{weight_values}{Vector of weights used (if "sd" or user-specified
-  weights are used).}
-}
+
 }
 \description{
 This function performs weighted Adaptive Fisher (wAF) test for

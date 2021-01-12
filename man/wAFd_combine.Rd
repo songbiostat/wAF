@@ -4,8 +4,7 @@
 \alias{wAFd_combine}
 \title{Directed wAF Combination}
 \usage{
-wAFd_combine(pvs_2sided, pvs_left, log = FALSE, weight = NULL,
-  n0 = 1)
+wAFd_combine(pvs_2sided, pvs_left, log = FALSE, weight = NULL, n0 = 1)
 }
 \arguments{
 \item{pvs_2sided}{P-values of two-tailed tests. A matrix with
@@ -31,7 +30,8 @@ A list object.
   \item{loci_combined}{Variants which are combined into the test
   statistic. The index of included variants are returned in the ascending
   order of their weighted P-values.}
-  \item{stat_all}{wAFd test statistics for P-values in every column.}
+  \item{stat_all}{wAFd statistics for all permuted samples.}
+  \item{pv_all}{P-values of wAFd statistics for all permuted samples.}
 }
 }
 \description{

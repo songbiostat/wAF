@@ -4,8 +4,17 @@
 \alias{data_sim}
 \title{Data Simulation}
 \usage{
-data_sim(n, K, prop, strg, binary = FALSE, case = NULL, corr = NULL,
-  maf = NULL, beta = NULL)
+data_sim(
+  n,
+  K,
+  prop,
+  strg,
+  binary = FALSE,
+  case = NULL,
+  corr = NULL,
+  maf = NULL,
+  beta = NULL
+)
 }
 \arguments{
 \item{n}{Number of subjects.}

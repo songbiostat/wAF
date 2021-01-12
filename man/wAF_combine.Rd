@@ -27,7 +27,8 @@ A list object.
   \item{loci_combined}{Variants which are combined into the test
   statistic. The index of included variants are returned in the ascending
   order of their weighted P-values.}
-  \item{stat_all}{wAF statistics for P-values in every column.}
+  \item{stat_all}{wAF statistics for all permuted samples.}
+  \item{pv_all}{P-values of wAF statistics for all permuted samples.}
 }
 }
 \description{

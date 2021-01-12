@@ -4,8 +4,7 @@
 \alias{perm_score}
 \title{Score Statistics Permutation}
 \usage{
-perm_score(Y, X, binary = FALSE, cov = NULL, nperm = 1000,
-  seed = NULL)
+perm_score(Y, X, binary = FALSE, cov = NULL, nperm = 1000, seed = NULL)
 }
 \arguments{
 \item{Y}{Phenotype data. It can be a continuous trait

@@ -4,7 +4,8 @@
 \name{SNV_sparse}
 \alias{SNV_sparse}
 \title{Simulated Single Nucleotide Variants (SNVs) Data in Sparse Scenario}
-\format{A list object.
+\format{
+A list object.
 \describe{
   \item{SNV}{A 1,000 by 300 matrix containing the genotypes. Each
   component of the matrix denotes the number of minor alleles.}
@@ -12,7 +13,8 @@
   \item{zero_var}{Indexes for columns with no variation. These
   columns should be removed if SNV is further used by perm_score, wAF and
   wAFd functions.}
-}}
+}
+}
 \usage{
 data(SNV_sparse)
 }
