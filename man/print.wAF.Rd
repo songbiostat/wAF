@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{An object of "wAF" class.}
+
+\item{...}{Optional arguments for \code{print}.}
 }
 \value{
 Method used; P-value; weights used; variants combined into the test

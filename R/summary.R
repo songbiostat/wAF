@@ -1,11 +1,14 @@
 #' Summary Function for Objects of "wAF" Class
 #'
-#' @param x An object of "wAF" class.
+#' @param object An object of "wAF" class.
+#' @param ... Optional arguments for \code{summary}.
 #'
 #' @return Method used; P-value; weights used; variants combined into the test
 #' statistic.
 #'
 #' @export
+#'
+#' @usage \method{summary}{wAF}(object, ...)
 #'
 #' @examples
 #' Y <- SNV_sparse$trait
@@ -13,34 +16,37 @@
 #' test1 <- wAF(Y, X, nperm = 100)
 #' summary(test1)
 #'
-summary.wAF <- function(x, ...){
+summary.wAF <- function(object, ...){
   cat("Method:\n")
-  cat(paste(x$method, "\n"))
+  cat(paste(object$method, "\n"))
   cat("\n")
   cat("P-value:\n")
-  print(x$pv)
+  print(object$pv)
   cat("\n")
   cat("Weights:\n")
-  if (x$weight == "flat") {
+  if (object$weight == "flat") {
     cat("Flat Weights\n")
   } else {
-    cat(paste(x$weight, "weights: \n"))
-    print(x$weight_values)
+    cat(paste(object$weight, "weights: \n"))
+    print(object$weight_values)
   }
   cat("\n")
   cat("SNVs combined into test statistic:\n")
-  print(x$loci_combined)
+  print(object$loci_combined)
 }
 
 
 #' Print Function for Objects of "wAF" Class
 #'
 #' @param x An object of "wAF" class.
+#' @param ... Optional arguments for \code{print}.
 #'
 #' @return Method used; P-value; weights used; variants combined into the test
 #' statistic.
 #'
 #' @export
+#'
+#' @usage \method{print}{wAF}(x, ...)
 #'
 #' @examples
 #' Y <- SNV_sparse$trait

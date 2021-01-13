@@ -33,6 +33,8 @@
 #'
 #' @export
 #'
+#' @import stats boot
+#'
 #' @examples
 #' # Simulate data using n, K, prop, strg
 #' data1 <- data_sim(100, 10, 0.1, 2)

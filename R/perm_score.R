@@ -28,6 +28,8 @@
 #'
 #' @seealso {\code{\link{set.seed}}}
 #'
+#' @import statmod
+#'
 #' @examples
 #' # binary trait
 #' Y <- RV_dense$trait

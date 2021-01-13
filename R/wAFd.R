@@ -33,7 +33,7 @@
 #'   statistic. The index of included variants are returned in the ascending
 #'   order of their weighted P-values.}
 #'   \item{stat_all}{wAFd statistics for all permuted samples.}
-#'   \item{pv_all}{P-values of wAFd statistics for all permuted samples.
+#'   \item{pv_all}{P-values of wAFd statistics for all permuted samples.}
 #'   \item{method}{Method used.}
 #'   \item{weight}{Method of weighing variants, "sd" of "flat".}
 #'   \item{weight_values}{Vector of weights used (if "sd" or user-specified
