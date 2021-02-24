@@ -61,35 +61,41 @@ perm_score <- function(Y, X, binary = FALSE, cov = NULL,
 
   if(is.null(cov)) cov <- rep(1, length(Y))
 
-  ## fit the null model
-  model <- ifelse(binary, "binomial", "gaussian")
-  data1 <- data.frame(trait = Y, cov)
-  null.model <- glm(trait ~ ., family = model, data = data1)
-
-  cov <- data.frame(cov)
-  X.null <- lm(X ~ ., data = cov)
-  Xres <- resid(X.null)
-  if(K == 1) {Xres <- matrix(Xres, ncol = K)}
-
-  ## calculate score test statistics U
-  U <- glm.scoretest(null.model, Xres)
-
-  ## permute X residuals and calculate permutation Us
-  if (!is.null(seed)) {
-    set.seed(seed)
-  }
-  order.perm <- replicate(nperm, sample(1:n))
-  U.perm <- apply(order.perm, 2,
-                  function(x) glm.scoretest(null.model, Xres[x, ]))
-
-  ## Calculate p-values
-  if (K == 1) {
-    Up <- matrix(c(U, U.perm), nrow = K)
+  if (all(s == 0)) {
+    print("all columns of X have no variation; set all P-values as 1.")
+    Up <- matrix(Inf, K, nperm + 1)
+    p <- p1 <- matrix(1, K, nperm + 1)
   } else {
-    Up <- cbind(U, U.perm)
+    ## fit the null model
+    model <- ifelse(binary, "binomial", "gaussian")
+    data1 <- data.frame(trait = Y, cov)
+    null.model <- glm(trait ~ ., family = model, data = data1)
+
+    cov <- data.frame(cov)
+    X.null <- lm(X ~ ., data = cov)
+    Xres <- resid(X.null)
+    if(K == 1) {Xres <- matrix(Xres, ncol = K)}
+
+    ## calculate score test statistics U
+    U <- glm.scoretest(null.model, Xres)
+
+    ## permute X residuals and calculate permutation Us
+    if (!is.null(seed)) {
+      set.seed(seed)
+    }
+    order.perm <- replicate(nperm, sample(1:n))
+    U.perm <- apply(order.perm, 2,
+                    function(x) glm.scoretest(null.model, Xres[x, ]))
+
+    ## Calculate p-values
+    if (K == 1) {
+      Up <- matrix(c(U, U.perm), nrow = K)
+    } else {
+      Up <- cbind(U, U.perm)
+    }
+    p <- 2 * (1 - pnorm(abs(Up)))
+    p1 <- pnorm(Up)
   }
-  p <- 2 * (1 - pnorm(abs(Up)))
-  p1 <- pnorm(Up)
 
   result <- list(Us = Up, pvs = p, pvs_left = p1)
   return(result)
